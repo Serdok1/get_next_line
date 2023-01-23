@@ -9,7 +9,10 @@ char    *get_next_line(int fd)
 		return (0);
     static_str = read_process(fd, static_str);
     if (!static_str)
-		return (0);
+    {
+        free(static_str);
+        return (0);
+    }
     str = substr_process(static_str);
     static_str = new_static_str(static_str);
     return(str);
@@ -23,7 +26,10 @@ char    *read_process(int fd, char *static_str)
     fd_info = 1;
     str = malloc((BUFFER_SIZE + 1) * sizeof(char));
     if (!str)
+    {
+        free(str);
 		return (NULL);
+    }
     while(!ft_strchr(static_str, '\n') && fd_info != 0)
     {
         fd_info = read(fd, str, BUFFER_SIZE);
@@ -47,7 +53,10 @@ char    *substr_process(char *static_str){
 
     i = 0;
     if (!*(static_str + i))
+    {
+        free(static_str);
 		return (0);
+    }
     while(static_str[i] != '\0' && static_str[i] != '\n')
         i++;
     if(static_str[i] == '\n')
@@ -55,7 +64,10 @@ char    *substr_process(char *static_str){
     else
         str = ft_substr(static_str, 0, i);
     if (!str)
+    {
+        free(str);
 		return (0);
+    }
     return (str);
 }
 
@@ -74,7 +86,10 @@ char    *new_static_str(char *static_str)
 	}
     new_str = ft_substr(static_str, i, (ft_strlen(static_str) - (i + 1)));
     if (!new_str)
+    {
+        free(new_str);
 		return (NULL);
+    }
     free(static_str);
     return(new_str);
 }
