@@ -53,10 +53,7 @@ char    *substr_process(char *static_str){
 
     i = 0;
     if (!*(static_str + i))
-    {
-        free(static_str);
 		return (0);
-    }
     while(static_str[i] != '\0' && static_str[i] != '\n')
         i++;
     if(static_str[i] == '\n')
@@ -84,7 +81,8 @@ char    *new_static_str(char *static_str)
 		free(static_str);
 		return (0);
 	}
-    new_str = ft_substr(static_str, i, (ft_strlen(static_str) - (i + 1)));
+    i++;
+    new_str = ft_substr(static_str, i, (ft_strlen(static_str) - i));
     if (!new_str)
     {
         free(new_str);
